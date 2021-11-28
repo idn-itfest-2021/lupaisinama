@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Website that help you boost your produtivity by being your assistent for your tasks and classes"
+    />
+    <link rel="stylesheet" href="style/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="./public/icon/logo.svg" type="image/x-icon" />
+    <title>Home | Prostant</title>
+  </head>
+  <body>
+    <nav>
+      <img src="./public/icon/logo.svg" alt="Prostant logo" class="nav_brand" />
+      <ul class="navbar">
+        <li class="nav_item nav_active">
+          <img src="./public/icon/Dashboard.svg" id="home" alt="Home Icon" />
+        </li>
+        <li class="nav_item">
+          <a href="./task.html">
+            <img src="./public/icon/Paper.svg" id="task" alt="Paper.svg Icon" />
+          </a>
+        </li>
+        <li class="nav_item">
+          <a href="./achivement.html">
+            <img src="./public/icon/achivement.svg" id="achivement" alt="achivement Icon" />
+          </a>
+        </li>
+        <li class="nav_item">
+          <a href="./profile.html">
+            <img src="./public/icon/profile-icon.svg" id="profile" alt="Profile Icon" />
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <main id="maincontent">
+        <header class="header">
+          <div class="page_heading">
+            <h1><span>Hello,</span> Jeje Rashid 👋</h1>
+            <p>Let's Finish Your Assignment</p>
+          </div>
+          <div class="page_bar">
+            <div class="notification_logo">
+              <img
+                src="./public/icon/notification.svg"
+                alt="notification logo"
+              />
+            </div>
+            <img
+              src="./public/image/profile.jpeg"
+              alt="profile picture"
+              class="bar_profile-picture"
+              id="profileBtn"
+            />
+          </div>
+        </header>
+
+        <statistic-section></statistic-section>
+
+        <section class="home_body">
+          <div class="assignment">
+            <div class="assignment_header">
+              <h2>Your Assignment</h2>
+              <a href="./task.html">See More &#8594;</a>
+            </div>
+            <div class="assignment_list"></div>
+          </div>
+
+          <calender-section></calender-section>
+
+          <div class="class">
+            <h2 class="class_heading">Class</h2>
+            <img
+              class="add_class-btn"
+              src="./public/icon/plus.svg"
+              alt="plus button"
+              id="openClassModal"
+            />
+            <div class="class_list">
+              <div class="class_item">
+                <p class="class_scheadule">Today</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="classModal" class="class_modal">
+            <div class="modal_content">
+              <h2 class="class_modal-heading">Add Class</h2>
+              <img src="./public/icon/close_button.svg" alt="close button" class="close_class-modal" id="closeClassModal">
+              <div class="class_modal-input">
+                <div class="lesson">
+                  <label for="lesson">Lesson</label>
+                  <input type="text" name="lesson" />
+                </div>
+                <div class="date">
+                  <label for="date">Date</label>
+                  <input type="date" name="date" />
+                </div>
+                <div class="time">
+                  <label for="time">Time</label>
+                  <input type="time" name="time" />
+                </div>
+                <div class="link">
+                  <label for="link">Link</label>
+                  <input type="text" name="link" />
+                </div>
+              </div>
+
+              <button id="addClassBtn" class="btn_add-class">Add</button>
+            </div>
+          </div>
+        </section>
+        
+        <side-profile-section></side-profile-section>
+
+      </div>
+      </main>
+      
+    <script src="./scripts/components/sideProfile.js"></script>
+    <script src="./scripts/data/Data.js"></script>
+    <script src="./scripts/components/calender.js"></script>
+    <script src="./scripts/components/statistic.js"></script>
+    <script>
+      const assignmentListElement = document.querySelector(".assignment_list")
+const assignmentClassList = document.querySelector(".class_item")
+
+homeAssignmentData.forEach(assignment => {
+	assignmentListElement.innerHTML += `
+		<div class="assignment_item ${assignment.subjectClass}">
+			<div class="assignment_item_header">
+				<h3 class="assignment_item_title">
+					${assignment.title}
+				</h3>
+				<p class="assignment_item_subject">${assignment.subject}</p>
+			</div>
+			<div class="assignment_detail">
+				<a href="./task.html" class="see_detail">See Assignment</a>
+			</div>
+		</div>
+	`
+})
+
+homeClassScheadule.forEach(classItem => {
+		assignmentClassList.innerHTML += `
+		<div class="class_item-body">
+			<div class="class_item-time">
+				<p>${classItem.subject} (${classItem.start} - ${classItem.end})</p>
+			</div>
+			<div class="class_item-header ${classItem.ongoing ? "ongoing" : ""}">
+				<h3 class="class_item-link">${classItem.link}</h3>
+			</div>
+			<a href="#" class="class_item-join">Join Class</a>
+		</div>
+	`
+})
+
+const openClassModalBtn = document.getElementById('openClassModal')
+const classModal = document.getElementById('classModal')
+const addClassBtn = document.getElementById('addClassBtn')
+const closeClassModal = document.getElementById('closeClassModal')
+
+openClassModalBtn.addEventListener('click', () => {
+	classModal.style.display = 'block'
+	document.querySelector('nav').style.zIndex = "-1"
+})
+
+window.addEventListener('click', (e) => {
+	console.log(e.target)
+	if (e.target == classModal) {
+		classModal.style.display = 'none'
+		document.querySelector('nav').style.zIndex = "0"
+	}
+})
+
+addClassBtn.addEventListener('click', () => {
+	classModal.style.display = 'none'
+	document.querySelector('nav').style.zIndex = "0"
+
+})
+
+closeClassModal.addEventListener('click', () => {
+	classModal.style.display = 'none'
+	document.querySelector('nav').style.zIndex = "0"
+
+})
+
+const sideProfileElement = document.getElementById('sideProfile')
+const sideProfileBtnElement = document.getElementById('profileBtn')
+const sideProfileBtnCloseElement = document.getElementById('closeClassProfile')
+
+sideProfileBtnElement.addEventListener('click', () => {
+	sideProfileElement.style.display = 'flex'
+})
+
+sideProfileBtnCloseElement.addEventListener('click', () => {
+	sideProfileElement.style.display = 'none'
+})
+
+window.addEventListener('click', (e) => {
+	if (e.target == sideProfileElement) {
+		sideProfileElement.style.display = 'none'
+	}
+})
+
+    </script>
+  </body>
+</html>
